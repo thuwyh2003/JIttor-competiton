@@ -2,7 +2,6 @@
 
 - [计图挑战赛实验报告](#计图挑战赛实验报告)
   - [Method](#method)
-    - [Dreambooth](#dreambooth)
     - [StyleID (Style Injection with Diffusion)](#styleid-style-injection-with-diffusion)
   - [Summerize](#summerize)
   - [Result](#result)
