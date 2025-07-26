@@ -13,14 +13,10 @@
 
 ## Method
 
-### Dreambooth
-
-Dreambooth 即为 Baseline 提供的方法，报告希望将讲述重点放在本组额外使用的方法上
-
 ### StyleID (Style Injection with Diffusion)
 
 1. 整体思路：
-    - StyleID 有两个输入了，其一为风格图片，其二为待转换风格的图片（我们用 Baseline 的输出作为待转换风格的图片，以进一步加强输出和参考风格的关联）
+    - StyleID 有两个输入了，其一为风格图片，其二为待转换风格的图片（我们用 DreamBooth 的输出作为待转换风格的图片，以进一步加强输出和参考风格的关联）
     - 首先，将两张图片分别进行 DDIM Inversion, 在进行加噪的过程中，将每一步 unet 中计算 self-attention 所用的 q, k, v 的值提取出来
     - 随后，将加噪得到的两个 latent noise 进行叠加
     - 最后，利用前面所得的 q, k, v 的值，引导对叠加得到的 latent noise 的 DDIM Reversion, 得到最终输出
@@ -328,18 +324,12 @@ Dreambooth 即为 Baseline 提供的方法，报告希望将讲述重点放在�
 1. 对于 Dreambooth，我们尝试过通过优化 prompt, 调整微调训练迭代次数来优化不同类的生成结果
     - 其中，前者作用并不是很大，在很多情况下，生成内容和提示词并不吻合（如提示词为芒果，但是生成的是瓶子，在生成 park, school 等场景类的词的时候尤为明显），我们猜测可能是由于 SD21 的文意理解能力有限，需要通过其他方法进行输出的指导
     - 后者在 style11 (石头浮雕风格)取得了很好的效果：在迭代次数为 1000 的情况下，由于 style11 的训练图片均为动物，故训练微调导致 overfitting，输入任何提示词，输出基本均为动物；将迭代次数降至 250 后，生成效果明显更优，既保留了风格，又保留了生成不同内容的能力
-2. 对于 StyleID
-    - 原作者 StyleID 是在 SD14 上实现的，其 unet 和 SD21 的 unet 结构虽一致，但是预测模式不同，前者为`epsilon`模式，后者为`v_prediction`模式；在最初实现的时候，由于忽略了这一点，加噪和降噪过程进行失败
-    - 原作者 StyleID 没有用任何库，手写的 ldm，导致在移植的时候查阅代码极度痛苦，不过好在还是成功了，也通过这个更进一步了解了 SD 的网络结构和细节
-3. 在后续工作中，我们计划使用额外的方法微调训练 SD，保证输出和 style 和 prompt 同时对齐
+
+2. 在后续工作中，我们计划使用额外的方法微调训练 SD，保证输出和 style 和 prompt 同时对齐
 
 ## Result
 
-1. 截止 6.30 23:30，小组提交的结果排名如下，位列第三
-
-    ![rank](./image_note/rank.png)
-
-2. 部分生成结果展示
+1. 部分生成结果展示
     - style00：cinema
 
         ![cinema](./image_note/Cinema.png)
@@ -364,19 +354,7 @@ Dreambooth 即为 Baseline 提供的方法，报告希望将讲述重点放在�
 
         ![scooter](./image_note/Scooter.png)
 
-## Members
 
-1. 孙昌勖 2021012754（队长）：
-    - baseline 调试
-    - Style Align 方法测试（计划后续使用于 B 榜）
-    - StyleID 方法测试并使用 Jittor 实现
-2. 汪钰涵 2022012241：
-    - baseline 调试
-    - 针对不同类和图片，生成合适的 prompt (positive and negative)，优化 baseline 输出效果
-3. 方奔皓 2021012747：
-    - baseline 调试
-    - baseline 结果生成
-    - Style Align 方法测试
 
 ## Reference
 
