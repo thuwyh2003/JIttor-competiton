@@ -6,7 +6,6 @@
     - [StyleID (Style Injection with Diffusion)](#styleid-style-injection-with-diffusion)
   - [Summerize](#summerize)
   - [Result](#result)
-  - [Members](#members)
   - [Reference](#reference)
     - [Websites](#websites)
     - [Paper](#paper)
